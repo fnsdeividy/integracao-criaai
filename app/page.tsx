@@ -121,7 +121,7 @@ export default function Home() {
       redirectUrl.searchParams.set('documentId', documentId)
       redirectUrl.searchParams.set('token', docToken)
       if (docRefreshToken) {
-        redirectUrl.searchParams.set('refreshToken', docRefreshToken)
+        // redirectUrl.searchParams.set('refreshToken', docRefreshToken)
       }
 
       console.log('🔗 [Integração] URL de redirect:', redirectUrl.toString())
@@ -129,7 +129,7 @@ export default function Home() {
 
       // Pequeno delay para garantir que tudo está processado
       setTimeout(() => {
-        window.location.href = redirectUrl.toString()
+        // window.location.href = redirectUrl.toString()
       }, 1000)
 
     } catch (err: any) {
