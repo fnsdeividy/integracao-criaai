@@ -1,12 +1,12 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 
 /**
- * Página de callback que recebe o retorno após finalização do documento na CriaAI
+ * Componente que usa useSearchParams - deve estar dentro de Suspense
  */
-export default function CallbackPage() {
+function CallbackContent() {
   const searchParams = useSearchParams()
   const [params, setParams] = useState<Record<string, string>>({})
 
@@ -99,6 +99,40 @@ export default function CallbackPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+/**
+ * Componente de loading para o Suspense
+ */
+function CallbackLoading() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Integração
+          </h1>
+          <p className="text-gray-600">
+            Carregando...
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Página de callback que recebe o retorno após finalização do documento na CriaAI
+ */
+export default function CallbackPage() {
+  return (
+    <Suspense fallback={<CallbackLoading />}>
+      <CallbackContent />
+    </Suspense>
   )
 }
 
