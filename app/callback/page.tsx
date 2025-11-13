@@ -1,0 +1,104 @@
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+/**
+ * Página de callback que recebe o retorno após finalização do documento na CriaAI
+ */
+export default function CallbackPage() {
+  const searchParams = useSearchParams()
+  const [params, setParams] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    const paramsObj: Record<string, string> = {}
+    searchParams.forEach((value, key) => {
+      paramsObj[key] = value
+    })
+    setParams(paramsObj)
+  }, [searchParams])
+
+  const success = params.success === 'True'
+  const message = params.message || ''
+  const documentUrl = params.document_url || ''
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Integração
+          </h1>
+          <p className="text-gray-600">
+            Documento Finalizado
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {success ? (
+            <div className="bg-green-50 border-l-4 border-green-400 rounded-lg p-4">
+              <div className="flex">
+                <div className="ml-3">
+                  <h2 className="text-green-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl">✓</span>
+                    Sucesso!
+                  </h2>
+                  <p className="text-green-700 text-sm">{message}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-red-50 border-l-4 border-red-400 rounded-lg p-4">
+              <div className="flex">
+                <div className="ml-3">
+                  <h2 className="text-red-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl">✗</span>
+                    Erro
+                  </h2>
+                  <p className="text-red-700 text-sm">{message || 'Erro desconhecido'}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {documentUrl && (
+            <div className="bg-blue-50 border-l-4 border-blue-400 rounded-lg p-4">
+              <h3 className="text-blue-800 font-semibold mb-2">URL do Documento:</h3>
+              <a
+                href={documentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 text-sm break-all underline block"
+              >
+                {documentUrl}
+              </a>
+              <a
+                href={documentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors"
+              >
+                Baixar Documento
+              </a>
+            </div>
+          )}
+
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h3 className="text-gray-800 font-semibold mb-2">Parâmetros Recebidos:</h3>
+            <pre className="text-xs text-gray-600 overflow-auto bg-white p-2 rounded border">
+              {JSON.stringify(params, null, 2)}
+            </pre>
+          </div>
+
+          <button
+            onClick={() => window.location.href = '/'}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-lg hover:shadow-xl"
+          >
+            Criar Novo Documento
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
