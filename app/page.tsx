@@ -112,25 +112,24 @@ export default function Home() {
 
       setStep('redirect')
 
-      // IMPORTANTE: O backend provavelmente não está setando cookies diretamente
-      // porque é cross-domain. Sempre usar a rota intermediária para garantir
-      console.log('🔄 [Integração] Redirecionando para rota intermediária de cookies...')
+      // Redirecionar para /documentInput com os parâmetros na query string
+      console.log('🔄 [Integração] Redirecionando para trabalhar no documento...')
       console.log('📋 [Integração] Dados do documento:', { documentId, hasToken: !!docToken, hasRefreshToken: !!docRefreshToken })
 
-      const redirectUrl = new URL(`${CRIAAI_FRONTEND_URL}`)
+      const redirectUrl = new URL(`${CRIAAI_FRONTEND_URL}/documentInput`)
       redirectUrl.searchParams.set('documentId', documentId)
       redirectUrl.searchParams.set('token', docToken)
       if (docRefreshToken) {
-        // redirectUrl.searchParams.set('refreshToken', docRefreshToken)
+        redirectUrl.searchParams.set('refreshToken', docRefreshToken)
       }
 
       console.log('🔗 [Integração] URL de redirect:', redirectUrl.toString())
-      console.log('⏳ [Integração] Redirecionando em 100ms para garantir que tudo está pronto...')
+      console.log('⏳ [Integração] Redirecionando em 500ms...')
 
       // Pequeno delay para garantir que tudo está processado
       setTimeout(() => {
         window.location.href = redirectUrl.toString()
-      }, 10000)
+      }, 500)
 
     } catch (err: any) {
       setError(err.message || 'Erro desconhecido')
