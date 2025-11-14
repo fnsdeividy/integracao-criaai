@@ -129,7 +129,7 @@ export default function Home() {
 
       // Pequeno delay para garantir que tudo está processado
       setTimeout(() => {
-        window.location.href = redirectUrl.toString()
+        // window.location.href = redirectUrl.toString()
       }, 1000)
 
     } catch (err: any) {
