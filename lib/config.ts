@@ -7,7 +7,6 @@ interface Config {
   // URLs da API
   apiBaseUrl: string
   authApiUrl: string
-  stage: string
   criaaiFrontendUrl: string
 
   // Credenciais
@@ -30,7 +29,6 @@ export function getConfig(): Config {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
   const authApiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL
   const criaaiFrontendUrl = process.env.NEXT_PUBLIC_CRIAAI_FRONTEND_URL
-  const stage = process.env.NEXT_PUBLIC_STAGE
 
   // Credenciais obrigatórias
   const apiKey = process.env.NEXT_PUBLIC_API_KEY
@@ -48,10 +46,6 @@ export function getConfig(): Config {
 
   if (!criaaiFrontendUrl) {
     errors.push('NEXT_PUBLIC_CRIAAI_FRONTEND_URL não está configurada')
-  }
-
-  if (!stage) {
-    errors.push('NEXT_PUBLIC_STAGE não está configurada')
   }
 
   if (!apiKey) {
@@ -87,7 +81,6 @@ export function getConfig(): Config {
   return {
     apiBaseUrl: apiBaseUrl || '',
     authApiUrl: authApiUrl || '',
-    stage: stage || 'nonprod',
     criaaiFrontendUrl: criaaiFrontendUrl || '',
     apiKey: apiKey || '',
     partnerEmail: partnerEmail || '',

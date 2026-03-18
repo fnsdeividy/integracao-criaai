@@ -3,7 +3,6 @@ import { documentStorage, DocumentMetadata, DocumentStatus } from './documentSto
 interface Config {
   apiBaseUrl: string
   authApiUrl: string
-  stage: string
   criaaiFrontendUrl: string
   apiKey: string
   partnerEmail: string
@@ -11,7 +10,7 @@ interface Config {
 }
 
 async function login(config: Config): Promise<string> {
-  const response = await fetch(`${config.authApiUrl}/${config.stage}/auth/login`, {
+  const response = await fetch(`${config.authApiUrl}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

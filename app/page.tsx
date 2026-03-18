@@ -19,7 +19,6 @@ export default function Home() {
   // Configurações da API
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://z45mlqpuui.execute-api.sa-east-1.amazonaws.com'
   const AUTH_API_URL = process.env.NEXT_PUBLIC_AUTH_API_URL || 'https://kqa418uhgj.execute-api.sa-east-1.amazonaws.com'
-  const STAGE = process.env.NEXT_PUBLIC_STAGE || 'nonprod'
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY || ''
   const CRIAAI_FRONTEND_URL = process.env.NEXT_PUBLIC_CRIAAI_FRONTEND_URL || 'http://localhost:3000'
 
@@ -34,7 +33,7 @@ export default function Home() {
 
     try {
       // Passo 1: Login do parceiro na API da CriaAI
-      const loginResponse = await fetch(`${AUTH_API_URL}/${STAGE}/auth/login`, {
+      const loginResponse = await fetch(`${AUTH_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +65,7 @@ export default function Home() {
 
       // Passo 2: Criar documento externo
       // POST direto para o backend com credentials para permitir cookies
-      const createResponse = await fetch(`${AUTH_API_URL}/${STAGE}/documents/create-document`, {
+      const createResponse = await fetch(`${AUTH_API_URL}/documents/create-document`, {
         method: 'POST',
         headers: {
           'Authorization': authorization,
