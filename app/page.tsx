@@ -74,7 +74,8 @@ export default function Home() {
         },
         credentials: 'include', // Importante: permite cookies cross-domain
         body: JSON.stringify({
-          linkCallback: `${typeof window !== 'undefined' ? window.location.origin : ''}/callback?token=demo123`
+          linkCallback: `${typeof window !== 'undefined' ? window.location.origin : ''}/callback?token=demo123`,
+          documentType: 'rtf'
         })
       })
 
