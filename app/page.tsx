@@ -123,8 +123,8 @@ export default function Home() {
 
       setStep('redirect')
 
-      // Redirecionar para /documentInput com os parâmetros na query string
-      console.log('🔄 [Integração] Redirecionando para trabalhar no documento...')
+      // Abrir documento em nova guia do navegador
+      console.log('🔄 [Integração] Abrindo documento em nova guia...')
       console.log('📋 [Integração] Dados do documento:', { documentId, hasToken: !!docToken, hasRefreshToken: !!docRefreshToken })
 
       const redirectUrl = new URL(`${CRIAAI_FRONTEND_URL}/documentInput`)
@@ -134,12 +134,12 @@ export default function Home() {
         redirectUrl.searchParams.set('refreshToken', docRefreshToken)
       }
 
-      console.log('🔗 [Integração] URL de redirect:', redirectUrl.toString())
-      console.log('⏳ [Integração] Redirecionando em 500ms...')
+      console.log('🔗 [Integração] URL do documento:', redirectUrl.toString())
+      console.log('⏳ [Integração] Abrindo em nova guia em 500ms...')
 
       // Pequeno delay para garantir que tudo está processado
       setTimeout(() => {
-        window.location.href = redirectUrl.toString()
+        window.open(redirectUrl.toString(), '_blank')
       }, 500)
 
     } catch (err: any) {
