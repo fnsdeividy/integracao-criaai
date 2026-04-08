@@ -30,6 +30,10 @@ export default function Home() {
     setLoading(true)
     setError(null)
     setStep('login')
+    
+    // Abre uma aba imediatamente no gesto do usuário para evitar bloqueio de popup
+    // quando o redirecionamento ocorrer após chamadas assíncronas.
+    const platformWindow = window.open('', '_blank', 'noopener,noreferrer')
 
     try {
       // Passo 1: Login do parceiro na API da CriaAI
@@ -135,14 +139,19 @@ export default function Home() {
       }
 
       console.log('🔗 [Integração] URL do documento:', redirectUrl.toString())
-      console.log('⏳ [Integração] Abrindo em nova guia em 500ms...')
-
-      // Pequeno delay para garantir que tudo está processado
-      setTimeout(() => {
-        window.open(redirectUrl.toString(), '_blank')
-      }, 500)
+      console.log('🚀 [Integração] Redirecionando para a CriaAI...')
+      
+      if (platformWindow) {
+        platformWindow.location.href = redirectUrl.toString()
+      } else {
+        // Fallback: se a aba não abriu, redireciona na aba atual
+        window.location.href = redirectUrl.toString()
+      }
 
     } catch (err: any) {
+      if (platformWindow && !platformWindow.closed) {
+        platformWindow.close()
+      }
       setError(err.message || 'Erro desconhecido')
       setLoading(false)
       setStep('idle')
